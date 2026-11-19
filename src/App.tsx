@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { storage } from "@/core/storage";
 import { Home } from "@/modules/home/Home";
+import { clearWeek } from "@/modules/menu/weekPlanner";
 import { OnboardingFlow } from "@/modules/onboarding/OnboardingFlow";
 import { ProfileProvider, useProfile } from "@/modules/profile/ProfileContext";
 
@@ -23,6 +24,7 @@ function Router() {
       onRestart={() => {
         storage.set("onboarded", false);
         storage.remove("signals");
+        clearWeek();
         reset();
         setOnboarded(false);
       }}

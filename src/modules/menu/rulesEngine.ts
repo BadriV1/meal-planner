@@ -31,7 +31,7 @@ function hitsSkip(meal: CatalogMeal, p: HouseholdProfile): boolean {
   });
 }
 
-function suitsAudience(meal: CatalogMeal, audience: Audience, p: HouseholdProfile): boolean {
+export function suitsAudience(meal: CatalogMeal, audience: Audience, p: HouseholdProfile): boolean {
   if (audience === "adult") return true;
   const youngest = youngestKidType(p.members);
   if (youngest === "toddler") return meal.toddlerFriendly;
@@ -43,7 +43,7 @@ export function allowedMeals(p: HouseholdProfile, mealType?: MealType): CatalogM
   return CATALOG.filter((m) => (!mealType || m.mealType === mealType) && passesHardRules(m, p));
 }
 
-function candidates(p: HouseholdProfile, mealType: MealType, audience: Audience, maxMinutes: number) {
+export function candidates(p: HouseholdProfile, mealType: MealType, audience: Audience, maxMinutes: number) {
   const favs = new Set(p.favoriteMealIds);
   return allowedMeals(p, mealType)
     .filter((m) => suitsAudience(m, audience, p))

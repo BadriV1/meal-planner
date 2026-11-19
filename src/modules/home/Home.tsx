@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { WeeklyMenu } from "@/modules/menu/WeeklyMenu";
 import { useProfile } from "@/modules/profile/ProfileContext";
 import { ALLERGEN_OPTIONS, DIET_OPTIONS, MEMBER_LABEL } from "@/modules/profile/rules";
 import { DEFAULT_SETTINGS as S } from "@/modules/settings/defaults";
 import { getSignals } from "@/modules/signals/signals";
 
-/** Placeholder Home: menu (weekly/daily), + Add reel, settings defaults. Built out next. */
+/** Home: weekly menu, + Add reel (next), household + settings summary (Settings screen comes later). */
 export function Home({ onRestart }: { onRestart: () => void }) {
   const { profile } = useProfile();
-  const [view, setView] = useState<"weekly" | "daily">("weekly");
   const signals = getSignals();
 
   const counts = profile.members.reduce<Record<string, number>>((acc, m) => {
@@ -27,22 +26,7 @@ export function Home({ onRestart }: { onRestart: () => void }) {
         </button>
       </div>
 
-      <div className="panel">
-        <div className="home-top" style={{ marginBottom: 12 }}>
-          <strong>Menu</strong>
-          <div className="seg">
-            <button className={view === "weekly" ? "on" : ""} onClick={() => setView("weekly")}>
-              Weekly
-            </button>
-            <button className={view === "daily" ? "on" : ""} onClick={() => setView("daily")}>
-              Daily
-            </button>
-          </div>
-        </div>
-        <p className="sub" style={{ margin: 0 }}>
-          Your first {view} menu arrives {S.menuArrives.day} at {S.menuArrives.time}.
-        </p>
-      </div>
+      <WeeklyMenu />
 
       <div className="panel">
         <strong>Your household</strong>
